@@ -5,7 +5,7 @@ RSpec.describe Puppet2conf do
     expect(Puppet2conf::VERSION).not_to be nil
   end
 
-  it "does something useful" do
-    expect(false).to eq(true)
+  it "Updating doc of this module in Confluence" do
+    expect(Puppet2conf::GenDoc).to be_a_kind_of Class
   end
 end
