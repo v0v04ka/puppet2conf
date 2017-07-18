@@ -39,13 +39,10 @@ module Puppet2conf
                         body:      {storage: {value: html, representation: "storage"}}})
 
       else
+        page = @client.get_by_id(page['id'])
         puts "Page '#{page_title}' exists. Updating it"
-        if page['version'].nil?
-          version = 1
-        else
           version = page['version']['number'] || 1
-        end
-        @client.update(page['id'],
+        puts @client.update(page['id'],
                             {type:      "page",
                              id:        page['id'],
                              title:     page_title,
