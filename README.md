@@ -14,10 +14,6 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install puppet2conf
-
 ## Usage
 For example add following to your Rakefile in puppet module for complete documentation generation (including puppet strings generate)
 ```ruby
