@@ -23,31 +23,33 @@ module Puppet2conf
       page = @client.get({spaceKey: @space, title: page_title})[0]
       if ancestor
         parent_page = @client.get({spaceKey: @space, title: ancestor})[0]
-        if ancestor
+        if parent_page
+          puts parent_page
           ancestors = [{type: 'page', id: parent_page['id']}]
         else
           warn "Couldn't find parrent page #{ancestor}"
           exit 1
         end
       end
-      if page
-        @client.update(page['id'],
-                       {type:      "page",
-                        title:     "title",
-                        space:     {key: space},
+      if page.nil?
+        @client.create({type:      "page",
+                        title:     page_title,
+                        space:     {key: @space},
                         ancestors: ancestors,
                         body:      {storage: {value: html, representation: "storage"}}})
+
       else
-        @client.create({type:      "page",
-                        title:     "title",
-                        space:     {key: space},
+        @client.update(page['id'],
+                       {type:      "page",
+                        title:     page_title,
+                        space:     {key: @space},
                         ancestors: ancestors,
                         body:      {storage: {value: html, representation: "storage"}}})
       end
     end
 
 
-    def gendocs(module_name, path='./')
+    def gendocs(module_name, path='./', pushstrings=false)
       module_html = Md2conf.parse_markdown File.read(path + 'README.md')
       push_page(module_name, module_html, @ancestor)
       ["CHANGELOG.md", "CONTRIBUTING.md"].each do |md_file|
@@ -57,9 +59,11 @@ module Puppet2conf
           push_page(page_title, html, module_name)
         end
       end
-      PuppetStrings.generate(nil, :json => "#{path}#{module_name}.json")
-      reference_html = Strings2conf.convert(File.read("#{path}#{module_name}.json"))
-      push_page("#{module_name} Reference", reference_html, module_name)
+      if pushstrings
+        PuppetStrings.generate(nil, :json => "#{path}#{module_name}.json")
+        reference_html = Strings2conf.convert(File.read("#{path}#{module_name}.json"))
+        push_page("#{module_name} Reference", reference_html, module_name)
+      end
     end
 
   end
