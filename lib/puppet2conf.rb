@@ -24,7 +24,6 @@ module Puppet2conf
       if ancestor
         parent_page = @client.get({spaceKey: @space, title: ancestor})[0]
         if parent_page
-          puts parent_page
           ancestors = [{type: 'page', id: parent_page['id']}]
         else
           warn "Couldn't find parrent page #{ancestor}"
@@ -32,6 +31,7 @@ module Puppet2conf
         end
       end
       if page.nil?
+        puts "Page '#{page_title}' doesn't exist, creating it"
         @client.create({type:      "page",
                         title:     page_title,
                         space:     {key: @space},
@@ -39,12 +39,20 @@ module Puppet2conf
                         body:      {storage: {value: html, representation: "storage"}}})
 
       else
+        puts "Page '#{page_title}' exists. Updating it"
+        if page['version'].nil?
+          version = 1
+        else
+          version = page['version']['number'] || 1
+        end
         @client.update(page['id'],
-                       {type:      "page",
-                        title:     page_title,
-                        space:     {key: @space},
-                        ancestors: ancestors,
-                        body:      {storage: {value: html, representation: "storage"}}})
+                            {type:      "page",
+                             id:        page['id'],
+                             title:     page_title,
+                             space:     {key: @space},
+                             ancestors: ancestors,
+                             version:   {number: version + 1},
+                             body:      {storage: {value: html, representation: "storage"}}})
       end
     end
 
