@@ -41,15 +41,15 @@ module Puppet2conf
       else
         page = @client.get_by_id(page['id'])
         puts "Page '#{page_title}' exists. Updating it"
-          version = page['version']['number'] || 1
-        puts @client.update(page['id'],
-                            {type:      "page",
-                             id:        page['id'],
-                             title:     page_title,
-                             space:     {key: @space},
-                             ancestors: ancestors,
-                             version:   {number: version + 1},
-                             body:      {storage: {value: html, representation: "storage"}}})
+        version = page['version']['number'] || 1
+        @client.update(page['id'],
+                       {type:      "page",
+                        id:        page['id'],
+                        title:     page_title,
+                        space:     {key: @space},
+                        ancestors: ancestors,
+                        version:   {number: version + 1},
+                        body:      {storage: {value: html, representation: "storage"}}})
       end
     end
 
