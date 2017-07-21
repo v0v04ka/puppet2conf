@@ -63,7 +63,7 @@ module Puppet2conf
         end
       end
       if pushstrings
-        PuppetStrings.generate(PuppetStrings.DEFAULT_SEARCH_PATTERNS, json: "#{path}#{module_name}.json")
+        PuppetStrings.generate(PuppetStrings::DEFAULT_SEARCH_PATTERNS, json: "#{path}#{module_name}.json")
         reference_html = Strings2conf.convert(File.read("#{path}#{module_name}.json"))
         push_page("#{module_name} Reference", reference_html, module_name)
       end
