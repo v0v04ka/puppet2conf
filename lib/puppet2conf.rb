@@ -75,7 +75,7 @@ module Puppet2conf
       Dir.glob('*.md').each do |md_file|
         next if md_file.eql? 'README.md'
         html       = if md_file.eql? 'CHANGELOG.md'
-          MD2conf.parse_markdown(File.read(md_file), max_toc_level: 2)
+          Md2conf.parse_markdown(File.read(md_file), max_toc_level: 2)
         else
           Md2conf.parse_markdown File.read(md_file)
         end
