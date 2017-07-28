@@ -135,7 +135,7 @@ module Puppet2conf
       end
     end
 
-    def self.gendocs(title_page, strings: true)
+    def gendocs(title_page, strings: true)
       module_html = Md2conf.parse_markdown File.read('README.md')
       push_page(title_page, module_html, @config['ancestor'])
       Dir.glob('*.md').each do |md_file|
