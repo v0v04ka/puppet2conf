@@ -74,7 +74,11 @@ module Puppet2conf
       push_page(title_page, module_html, @config['ancestor'])
       Dir.glob('*.md').each do |md_file|
         next if md_file.eql? 'README.md'
-        html       = Md2conf.parse_markdown File.read(md_file)
+        html       = if md_file.eql? 'CHANGELOG.md'
+          MD2conf.parse_markdown(File.read(md_file), max_toc_level: 2)
+        else
+          Md2conf.parse_markdown File.read(md_file)
+        end
         page_title = "#{title_page} #{File.basename(md_file).sub('.md', '')}"
         push_page(page_title, html, title_page)
       end
