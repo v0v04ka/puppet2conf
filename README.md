@@ -15,16 +15,38 @@ And then execute:
     $ bundle
 
 ## Usage
-For example add following to your Rakefile in puppet module for complete documentation generation (including puppet strings generate)
+
+First, generate a configuration file located at `~/.puppet2conf.yml`:
+
+```yaml
+username: confluence-bot
+password: MySecurePassword
+url: https://confluence.mycompany.com
+space: OpsSpace
+ancestor: PuppetModules
+```
+
+then create a Rake task that looks like this:
+
 ```ruby
-require 'puppet2conf'
+desc 'Generate documentation'
 task :gendoc do
-  puppet2conf = Puppet2conf::GenDoc.new('confluence-bot-name',
-                                        'confluencePasswd4Bot',
-                                        'https://confluence.example.net',
-                                        'OPS',
-                                        'Modules')
-  puppet2conf.gendocs('module_name', './', true)
+  require 'puppet2conf'
+  doc_pusher = Puppet2conf::DocPusher.new
+  doc_pusher.gendocs('module_name')
+end
+```
+
+If you have lots of modules with the same Rakefile, you could parse out the module name from metadata:
+
+```ruby
+desc 'Generate documentation'
+task :gendoc do
+  require 'puppet2conf'
+  require 'json'
+  module_name = JSON.parse(File.read 'metadata.json')['name'].split('-')[1]
+  doc_pusher = Puppet2conf::DocPusher.new
+  doc_pusher.gendocs(module_name)
 end
 ```
 
