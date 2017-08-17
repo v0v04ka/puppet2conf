@@ -79,7 +79,7 @@ module Puppet2conf
         else
           Md2conf.parse_markdown File.read(md_file)
         end
-        page_title = "#{title_page} #{File.basename(md_file).sub('.md', '')}"
+        page_title = "#{title_page} #{File.basename(md_file).sub('.md', '').split('_').map(&:capitalize).join(' ')}"
         push_page(page_title, html, title_page)
       end
       if strings
