@@ -45,18 +45,24 @@ module Puppet2conf
       end
       if page.nil?
         puts "Page '#{page_title}' doesn't exist, creating it"
-        @client.create(
+        response = @client.create(
           type:      'page',
           title:     page_title,
           space:     { key: @config['space'] },
           ancestors: ancestors,
           body:      { storage: { value: html, representation: 'storage' } }
         )
+        if response['statusCode'].eql? 400
+          warn 'An error occurred while creating:'
+          warn response['message']
+          warn 'This can happen when a page exists with the same name, but different capitalization. Please fix it manually.'
+          exit 1
+        end
       else
         page = @client.get_by_id(page['id'])
         puts "Page '#{page_title}' exists. Updating it"
-        version = page['version']['number'] || 1
-        @client.update(
+        version  = page['version']['number'] || 1
+        response = @client.update(
           page['id'],
           type:      'page',
           id:        page['id'],
@@ -66,6 +72,11 @@ module Puppet2conf
           version:   { number: version + 1 },
           body:      { storage: { value: html, representation: 'storage' } }
         )
+        if response['statusCode'].eql? 400
+          warn 'An error occurred while updating:'
+          warn response['message']
+          exit 1
+        end
       end
     end
 
