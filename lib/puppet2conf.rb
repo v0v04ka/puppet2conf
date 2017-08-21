@@ -1,7 +1,7 @@
 require 'puppet2conf/version'
 require 'strings2conf'
 require 'md2conf'
-require 'confluence/api/client'
+require 'conf/api/client'
 require 'puppet-strings'
 require 'yaml'
 
@@ -29,7 +29,7 @@ module Puppet2conf
       end
 
       @config.merge! params
-      @client = Confluence::Api::Client.new(@config['username'], @config['password'], @config['url'])
+      @client = Conf::Api::Client.new(@config['username'], @config['password'], @config['url'])
     end
 
     def push_page(page_title, html, ancestor)
