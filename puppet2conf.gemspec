@@ -6,8 +6,8 @@ require 'puppet2conf/version'
 Gem::Specification.new do |spec|
   spec.name          = 'puppet2conf'
   spec.version       = Puppet2conf::VERSION
-  spec.authors       = ['Vladimir Tyshkevich']
-  spec.email         = ['vtyshkevich@iponweb.net']
+  spec.authors       = ['Vladimir Tyshkevich', 'Eugene Piven']
+  spec.email         = ['vtyshkevich@iponweb.net', 'epiven@iponweb.net']
   spec.summary       = 'Gets XHTML Confluence storage and push it to Confluence'
   spec.license       = 'MIT'
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }

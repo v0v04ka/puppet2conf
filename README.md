@@ -7,7 +7,7 @@ Generate all related to your puppet module documentation in your confluence
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'puppet2conf', github: 'https://github.com/v0v04ka/puppet2conf'
+gem 'puppet2conf'
 ```
 
 And then execute:
