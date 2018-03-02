@@ -94,7 +94,7 @@ module Puppet2conf
         push_page(page_title, html, title_page)
       end
       if strings
-        PuppetStrings.generate(PuppetStrings::DEFAULT_SEARCH_PATTERNS, json: 'puppet_strings.json')
+        PuppetStrings.generate(PuppetStrings::DEFAULT_SEARCH_PATTERNS, json: true, path: 'puppet_strings.json')
         reference_html = Strings2conf.convert(File.read('puppet_strings.json'))
         push_page("#{title_page} Reference", reference_html, title_page)
       end

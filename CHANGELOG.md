@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- Updated behavior to work with recent release of `puppet-strings`.
+
 ### Added
 - Warn if attempt to create/update a page in Confluence fails.
 
