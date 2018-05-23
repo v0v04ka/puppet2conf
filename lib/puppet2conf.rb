@@ -89,6 +89,8 @@ module Puppet2conf
         next if md_file.eql? 'README.md'
         html       = if md_file.eql? 'CHANGELOG.md'
           Md2conf.parse_markdown(File.read(md_file), max_toc_level: 2)
+        elsif md_file.eql? 'REFERENCE.md'
+          Md2conf.parse_markdown(File.read(md_file), user_mentions: false)
         else
           Md2conf.parse_markdown File.read(md_file)
         end
