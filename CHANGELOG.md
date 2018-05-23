@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Changed
+- Dropped strings2conf dependency. We now generate REFERENCE.md directly with puppet-strings.
 - Updated behavior to work with recent release of `puppet-strings`.
 
 ### Added

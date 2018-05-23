@@ -1,5 +1,4 @@
 require 'puppet2conf/version'
-require 'strings2conf'
 require 'md2conf'
 require 'conf/api/client'
 require 'puppet-strings'
@@ -81,6 +80,9 @@ module Puppet2conf
     end
 
     def gendocs(title_page, strings: true)
+      if strings
+        PuppetStrings.generate(PuppetStrings::DEFAULT_SEARCH_PATTERNS, markdown: true)
+      end
       module_html = Md2conf.parse_markdown File.read('README.md')
       push_page(title_page, module_html, @config['ancestor'])
       Dir.glob('*.md').each do |md_file|
@@ -92,11 +94,6 @@ module Puppet2conf
         end
         page_title = "#{title_page} #{File.basename(md_file).sub('.md', '').split('_').map(&:capitalize).join(' ')}"
         push_page(page_title, html, title_page)
-      end
-      if strings
-        PuppetStrings.generate(PuppetStrings::DEFAULT_SEARCH_PATTERNS, json: true, path: 'puppet_strings.json')
-        reference_html = Strings2conf.convert(File.read('puppet_strings.json'))
-        push_page("#{title_page} Reference", reference_html, title_page)
       end
     end
   end

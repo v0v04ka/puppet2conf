@@ -16,8 +16,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'md2conf'
-  spec.add_runtime_dependency 'strings2conf'
-  spec.add_runtime_dependency 'puppet-strings', '>= 1.2.1'
+  spec.add_runtime_dependency 'puppet-strings', '>= 2.0.0'
   spec.add_runtime_dependency 'conf-api-client'
 
   spec.add_development_dependency 'bundler'
